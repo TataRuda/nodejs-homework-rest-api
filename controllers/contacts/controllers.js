@@ -1,5 +1,4 @@
 const {
-  getAllContacts,
   getById,
   createContact,
   updateContact,
@@ -7,9 +6,23 @@ const {
   updateStatus,
 } = require("../../service/contactService"); 
 
+const Contact = require('../../models/contact');
+
 const getContacts = async (req, res, next) => {
   try {
-    const results = await getAllContacts()
+    const { page = 1, limit = 20, favorite } = req.query;
+    const filter = {};
+        
+    if (favorite === 'true') {
+      filter.favorite = true;
+    }
+        
+    const options = {
+      page: parseInt(page),
+      limit: parseInt(limit),
+    };
+    
+    const results = await Contact.paginate(filter, options);
     res.status(200).json(results)
   } catch (error) {
     console.error(error);
