@@ -9,7 +9,7 @@ const loginUser = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
   
-    if (!user || !user.validPassword(password)) {
+    if (!user || !(await user.validPassword(password))) {
       return res.status(400).json({
         status: 'error',
         code: 400,
