@@ -23,12 +23,6 @@ const userSchema = new Schema({
     },
   })
 
-  userSchema.pre('save', async function () {
-    if (this.isNew) {
-      this.password = await bCrypt.hash(this.password, 9)
-    }
-  })
-  
   userSchema.methods.validPassword = async function (password) {
     console.log("Input password:", password);
     console.log("Stored password hash:", this.password);

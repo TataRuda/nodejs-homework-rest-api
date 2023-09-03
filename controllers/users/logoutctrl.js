@@ -1,23 +1,25 @@
 const  User  = require('../../models/user');
 
 const logoutUser = async (req, res) => {
-    const user = req.user;
-    console.log(user); 
-
-    if (!user) {
-        return res.status(401).json({
-        status: 'error',
-        code: 401,
-        message: "Not authorized",
-        });
+    try {
+        const userId = req.user._id;
+        const user = await User.findById(userId);
+    
+        if (!user) {
+            return res.status(401).json({
+                status: 'error',
+                code: 401,
+                message: "Not authorized",
+            });
         }
-
-    await User.findByIdAndUpdate(user._id, { token: "" })
-    res.status(204).json({
-        status: 'success',
-        code: 204,
-        message: 'No Content',
-        });
+    
+        user.token = null;
+        await user.save();
+    
+        return res.status(204).end();
+    } catch (error) {
+        res.status(500).json({ message: "Internal Server Error" });
+    }
     
 };
 

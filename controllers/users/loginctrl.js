@@ -5,6 +5,7 @@ require('dotenv').config();
 const secret = process.env.JWT_SECRET_KEY;
 
 const loginUser = async (req, res) => {
+  try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
   
@@ -29,6 +30,11 @@ const loginUser = async (req, res) => {
         user
       },
     });
+
+  } catch (error){
+      console.error(error);
+      res.status(500).json({ message: 'Server Error' }) 
+  }
   };
 
 module.exports = { loginUser }

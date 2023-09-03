@@ -1,6 +1,7 @@
 
 const getCurrentUser = async (req, res) => {
-  const user = req.user;
+  try {
+    const user = req.user;
   
   if (!user) {
       return res.status(401).json({ message: 'Not authorized' });
@@ -16,6 +17,10 @@ const getCurrentUser = async (req, res) => {
       email,
       subscription,
   });
+} catch (error){
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' }) 
+}
 };
 
 module.exports = { getCurrentUser };
