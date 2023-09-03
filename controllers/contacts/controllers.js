@@ -5,7 +5,7 @@ const {
   updateContact,
   removeContact,
   updateStatus,
-} = require("../../service"); 
+} = require("../../service/contactService"); 
 
 const getContacts = async (req, res, next) => {
   try {
