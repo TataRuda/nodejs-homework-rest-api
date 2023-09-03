@@ -24,10 +24,8 @@ const userSchema = new Schema({
   })
 
   userSchema.methods.validPassword = async function (password) {
-    console.log("Input password:", password);
-    console.log("Stored password hash:", this.password);
     const result = await bCrypt.compare(password, this.password)
-    console.log(result);
+    console.log(result)
     return result
   }
 
