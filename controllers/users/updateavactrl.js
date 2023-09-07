@@ -21,11 +21,11 @@ const updateAvatar = async (req, res) => {
       'public',
       'avatars',
       filename
-    );
+    ); // dir for saving avatar
 
     await resizeFile(tmpUploadDir);
 
-    await fs.rename(tmpUploadDir, staticUploadDir);
+    await fs.rename(tmpUploadDir, staticUploadDir); // relocate avatar from tmp to public
 
     const avatarURL = path.join('avatars', filename);
     const user = await User.findByIdAndUpdate(
