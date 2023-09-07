@@ -3,7 +3,7 @@ const { loginUser } = require('./loginctrl');
 const { logoutUser } = require('./logoutctrl');
 const { getCurrentUser } = require('./getcurrentctrl');
 const { updateAvatar } = require('./updateavactrl');
-
+const { updateSubscription } = require('./updatestatusctrl');
 
 
 module.exports = { 
@@ -12,4 +12,5 @@ module.exports = {
     loginUser,
     getCurrentUser,
     updateAvatar,
+    updateSubscription,
 }
