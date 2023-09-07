@@ -19,7 +19,7 @@ const loginUser = async (req, res) => {
     }
   
     const payload = { id: user._id };  
-    const token = jwt.sign(payload, secret, { expiresIn: '1h' });
+    const token = jwt.sign(payload, secret, { expiresIn: '5h' });
     user.token = token;
     await user.save();
    
