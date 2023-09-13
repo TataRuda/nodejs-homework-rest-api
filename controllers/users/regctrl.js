@@ -1,6 +1,8 @@
 const User = require('../../models/user');
 const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
+const { v4: uuidv4 } = require('uuid');
+const {sendEmail} = require('../../helpers/sendEmail');
 
 const registerUser = async(req, res) => {
   try {           
@@ -25,11 +27,14 @@ const registerUser = async(req, res) => {
       email,
       subscription: 'starter',
       avatarURL,
-      password: hashedPassword, 
+      password: hashedPassword,
+      verificationToken: uuidv4(), 
       });
       
          
     await newUser.save();
+
+    await sendEmail({ email, verificationToken: newUser.verificationToken })
                   
     res.status(201).json({
       user: {

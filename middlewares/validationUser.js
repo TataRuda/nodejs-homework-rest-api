@@ -5,17 +5,25 @@ const schema = Joi.object({
     password: Joi.string().min(8).required(),
 });
 
-const validate = (schema, res, req, next) => {
-  const validationBody = schema.validate(req.body)
+const schemaEmail = Joi.object({
+  email: Joi.string().email().required()
+});
 
-  if (validationBody.error) {
-    return res.status(400).json({ message: validationBody.error.message })
+const validate = (schema, res, req, next) => {
+  const validationResult = schema.validate(req.body);
+  
+  if (validationResult.error) {
+    return res.status(400).json({ message: validationResult.error.message})
   }
   next()
 };
 
+
 module.exports = {
   userValidation: (req, res, next) => {
     return validate(schema, res, req, next)
+  },
+  validationEmail: (req, res, next) => {
+    return validate(schemaEmail, res, req, next)
   }
 }
