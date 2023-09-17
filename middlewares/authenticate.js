@@ -14,8 +14,7 @@ const authenticate = async (req, res, next) => {
           
         const decodedToken = jwt.verify(token, JWT_SECRET_KEY);
         const  id = decodedToken.id;
-        console.log(id)
-       
+              
         const user = await User.findById(id);
 
         if (!user || !user.token || user.token !== token) {
